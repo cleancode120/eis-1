@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+	<!-- console로 log 남기기 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+				[%-5level] [%d{HH:mm:ss.SSS}] %logger[%method:%line] - %msg%n
+				<!-- ▶ %-5level %d{HH:mm:ss.SSS} [%thread] %logger[%method:%line] - %msg%n -->
+            </pattern>
+        </encoder>
+    </appender>
+ 
+	<!-- file로 log 남기기 -->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>C:\java\workspace\log\eis_log\eis.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 파일이 하루에 한개씩 생성된다 -->
+            <fileNamePattern>eis.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+				[%-5level] [%d{HH:mm:ss.SSS}] %logger[%method:%line] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+        
+    <!-- 이 아래에 있는 애들 다 log로 찍겠다. -->
+    <logger name="com.ktds.mcjang.intercept.LoginInterceptor" level="info">
+        <appender-ref ref="fileForLoginInterceptor"/>
+    </logger>
+    
+    <!-- 이 아래에 있는 애들 다 log로 찍겠다. -->
+    <logger name="org.springframework" level="info" />
+    <root level="debug">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </root>
+        
+</configuration>
